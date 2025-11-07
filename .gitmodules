@@ -1,0 +1,6 @@
+[submodule "repos/ijon"]
+	path = repos/ijon
+	url = https://github.com/RUB-SysSec/ijon
+[submodule "repos/ijon-data"]
+	path = repos/ijon-data
+	url = https://github.com/RUB-SysSec/ijon-data
