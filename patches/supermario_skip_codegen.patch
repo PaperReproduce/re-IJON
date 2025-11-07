@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 18c37369c..2223537eb 100644
+index 18c37369c..b53ae9800 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.5)
@@ -25,3 +25,18 @@ index 18c37369c..2223537eb 100644
 +if (NOT IJON_SKIP_CODEGEN)
 +  add_dependencies(smbc codegen)
 +endif ()
+diff --git a/source/Main.cpp b/source/Main.cpp
+index fb763cbb7..58d80433f 100644
+--- a/source/Main.cpp
++++ b/source/Main.cpp
+@@ -356,7 +356,9 @@ static void mainLoop(bool video, bool trace)
+ 					idle += 1;
+ 				}else{ idle = 0; last_world_pos = world_pos; }
+ 				if(hammertime && idle > 4){return;} //lazy bastard
+-				assert(engine.readData(0x1d) != 0x03);
++				if(engine.readData(0x1d) == 0x03){
++					return; // 到达关卡终点时直接返回，避免断言中止
++				}
+         frame++;
+     }
+ }
