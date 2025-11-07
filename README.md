@@ -2,6 +2,9 @@
 
 > 复现 IJON 论文实验的最小步骤，按顺序执行即可。
 
+## 论文地址
+> https://ieeexplore.ieee.org/document/9152719
+
 ## 第一步：准备源码
 1. 克隆本仓库后初始化子模块：
    ```bash
