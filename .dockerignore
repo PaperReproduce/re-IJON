@@ -1,0 +1,10 @@
+.git
+.gitmodules
+.temp
+external/mario/roms/*
+!external/mario/roms/.gitkeep
+!external/mario/roms/mario.nes
+repos/*/.git
+docker/Dockerfile.example
+*.pyc
+__pycache__/
