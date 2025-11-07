@@ -1,0 +1,25 @@
+FROM reproduce-ijon:latest
+
+WORKDIR /workspace/mario
+
+COPY ["repos/ijon-data/SuperMarioBros-C", "/workspace/mario"]
+COPY ["external/mario/roms/mario.nes", "/workspace/mario/Super Mario Bros. (JU) (PRG0) [!].nes"]
+COPY ["patches", "/workspace/patches"]
+
+RUN cd /workspace/mario && patch -p1 < /workspace/patches/supermario_skip_codegen.patch
+
+RUN mkdir -p build_ijon && \
+    cd build_ijon && \
+    AFL_DONT_OPTIMIZE=1 AFL_INST_RATIO=1 cmake .. \
+      -DCMAKE_C_COMPILER=/workspace/repos/ijon/afl-gcc \
+      -DCMAKE_CXX_COMPILER=/workspace/repos/ijon/afl-g++ \
+      -DCMAKE_C_COMPILER_WORKS=1 \
+      -DCMAKE_CXX_COMPILER_WORKS=1 \
+      -DIJON_SKIP_CODEGEN=ON \
+      -DSDL2_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2 && \
+    AFL_DONT_OPTIMIZE=1 AFL_INST_RATIO=1 make -j"$(nproc)" && \
+    mv smbc smbc_ijon
+
+ENV MARIO_ROM_PATH="/workspace/mario/Super Mario Bros. (JU) (PRG0) [!].nes"
+
+CMD ["/bin/bash"]

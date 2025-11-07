@@ -1,0 +1,27 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 18c37369c..2223537eb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.5)
+ 
+ project(smbc)
+ 
+-add_subdirectory(codegen)
++if (NOT DEFINED IJON_SKIP_CODEGEN)
++  set(IJON_SKIP_CODEGEN OFF)
++endif ()
++
++if (NOT IJON_SKIP_CODEGEN)
++  add_subdirectory(codegen)
++endif ()
+ 
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-c++11-narrowing")
+ 
+@@ -26,4 +32,6 @@ include_directories(${Boost_INCLUDE_DIRS})
+ add_executable(smbc ${SOURCE_FILES})
+ target_link_libraries(smbc ${SDL2_LIBRARY} ${SDL2_LIBRARIES})
+ 
+-add_dependencies(smbc codegen)
++if (NOT IJON_SKIP_CODEGEN)
++  add_dependencies(smbc codegen)
++endif ()
