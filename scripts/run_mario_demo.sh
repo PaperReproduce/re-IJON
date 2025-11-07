@@ -18,7 +18,7 @@ if [[ ! -f "$ROM_PATH" ]]; then
   exit 1
 fi
 
-DEMO_SECONDS="${DEMO_SECONDS:-20}"
+DEMO_SECONDS="${DEMO_SECONDS:-3600}"
 
 echo "[INFO] Running Mario fuzz demo inside ${IMAGE_TAG} (timeout ${DEMO_SECONDS}s)"
 docker run --rm --privileged "${IMAGE_TAG}" bash -lc "
